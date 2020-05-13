@@ -27,3 +27,15 @@ $ npm run generate
 4. 网站设置（待续）
 5. 登录注册（待续）
 6. 前台（待续）
+
+## MySQL配置
+
+在根目录下创建 `.env` 文件
+```
+sql_host = 127.0.0.1
+sql_port = 3306
+sql_user = root
+sql_password = 123456
+sql_database = doc
+sql_debug = true
+```
