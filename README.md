@@ -39,3 +39,16 @@ sql_password = 123456
 sql_database = doc
 sql_debug = true
 ```
+
+## SMTP配置
+
+在根目录下创建 `.env` 文件
+```
+smtp_host = smtp.qq.com
+smtp_user = ******@qq.com
+smtp_pass = ******
+```
+
+## MySQL和Redis环境
+
+初学者推荐使用 phpstudy 集成环境，大佬就不献丑了
