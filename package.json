@@ -1,0 +1,49 @@
+{
+  "name": "doc-app",
+  "version": "1.0.0",
+  "description": "My astonishing Nuxt.js project",
+  "author": "clin",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server --exec babel-node",
+    "build": "nuxt build --exec babel-node",
+    "start": "cross-env NODE_ENV=production babel-node server/index.js",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "run": "nuxt start"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.8.7",
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/dotenv": "^1.4.0",
+    "axios": "^0.19.2",
+    "core-js": "^2.6.11",
+    "cross-env": "^5.2.0",
+    "element-ui": "^2.4.11",
+    "koa": "^2.6.2",
+    "koa-body": "^4.1.1",
+    "koa-generic-session": "^2.0.4",
+    "koa-json": "^2.0.2",
+    "koa-passport": "^4.1.3",
+    "koa-redis": "^4.0.1",
+    "koa-router": "^8.0.8",
+    "mysql": "^2.18.1",
+    "nuxt": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "tsutils": "^3.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@nuxtjs/eslint-config": "^2.0.0",
+    "@nuxtjs/eslint-module": "^1.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^6.1.0",
+    "eslint-plugin-nuxt": ">=0.4.2",
+    "nodemon": "^1.18.9"
+  }
+}
