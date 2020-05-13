@@ -19,4 +19,10 @@ $ npm run start
 $ npm run generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+## 模块
+
+1、动态菜单栏（已完成）
+2、权限管理（权限组：已完成，用户权限：待续）
+3、文章标签（已完成）
+4、网站设置（待续）
+5、登录注册（待续）
