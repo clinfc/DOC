@@ -25,12 +25,15 @@ $ npm run generate
 2. 权限管理（权限组：已完成，用户权限：待续）
 3. 文章标签（已完成）
 4. 网站设置（待续）
-5. 登录注册（待续）
+5. 登录（待续）
+6. 注册（已完成完成）
 6. 前台（待续）
 
-## MySQL配置
+## 配置
 
 在根目录下创建 `.env` 文件
+
+#### MySQL配置
 ```
 sql_host = 127.0.0.1
 sql_port = 3306
@@ -40,15 +43,10 @@ sql_database = doc
 sql_debug = true
 ```
 
-## SMTP配置
-
-在根目录下创建 `.env` 文件
+#### SMTP配置
 ```
 smtp_host = smtp.qq.com
+smtp_port = 587
 smtp_user = ******@qq.com
 smtp_pass = ******
 ```
-
-## MySQL和Redis环境
-
-初学者推荐使用 phpstudy 集成环境，大佬就不献丑了
