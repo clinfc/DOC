@@ -70,25 +70,6 @@ class CustomFunction {
     })
   }
 
-  bothway (tar, forward, reverse, filter) {
-
-  }
-
-  /**
-   * 浅拷贝数组或对象（不会拷贝原型链）
-   * @param {Object|Array} tar
-   * @return {Object|Array}
-   */
-  copy (tar) {
-    if (this.isArray(tar)) {
-      return copyArray(tar)
-    }
-    if (this.isObject(tar)) {
-      return copyObject(tar)
-    }
-    return false
-  }
-
   /**
    * 数组去重
    * @param {Array} tar
@@ -104,18 +85,85 @@ class CustomFunction {
     }
     return []
   }
+
+  /**
+   * 生成验证码
+   * @param {Int} len 验证码长度
+   * @return {String}
+   */
+  get code () {
+    return (len = 6) => {
+      return Math.random().toString(16).slice(2, len + 2).toUpperCase()
+    }
+  }
+
+  /**
+   * 生成过期时间
+   * @param {Int} time 有效时长，从当前时间开始计算（单位：秒，默认：180）
+   * @return {Int} 过期时间（单位：毫秒）
+   */
+  get expire () {
+    return (time = 180) => {
+      return new Date().getTime() + time * 1000
+    }
+  }
+
+  /**
+   * 浅拷贝数组或对象（不会拷贝原型链）
+   * @param {Object|Array} tar
+   * @return {Object|Array}
+   */
+  copy (tar) {
+    if (Array.isArray(tar)) {
+      return copyArray(tar)
+    }
+    if (this.isObject(tar)) {
+      return copyObject(tar)
+    }
+    return false
+  }
+
+  /**
+   * 字符串验证
+   * @param {String} value 需要验证的数据
+   * @param {String} type 验证类型
+   * @return {Boolean}
+   */
+  validate (value, type) {
+    switch (type) {
+      // 邮箱
+      case 'email':
+        return /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/.test(value) ? true : '无效的邮箱地址'
+      // 纯字母
+      case 'alpha':
+        return /^[A-Za-z]+$/.test(value) ? true : '不能含有除字母以外的其它字符'
+      // 字母和数字
+      case 'alphaNum':
+        return /^[A-Za-z0-9]+$/.test(value) ? true : '不能含有除字母和数字以外的其它字符'
+      // 字母和数字，下划线_及破折号-
+      case 'alphaDash':
+        return /^[a-zA-Z0-9_-]+$/.test(value) ? true : '不能含有除字母、数字、下划线和破折号以外的其它字符'
+      // 汉字
+      case 'chs':
+        return /^[\u4E00-\u9FA5]{0,}$/.test(value) ? true : '不能含有除汉字以外的其它字符'
+    }
+  }
+
+  /**
+   * 获取当前的时间戳
+   */
+  get timestamp () {
+    return Math.floor(new Date().getTime() / 1000)
+  }
 }
 
 function copyObject (object) {
   const temp = { ...object }
   for (const k in temp) {
-    switch (typeof temp[k]) {
-      case 'object':
-        temp[k] = copyObject(temp[k])
-        break
-      case 'array':
-        temp[k] = copyArray(temp[k])
-        break
+    if (Array.isArray(temp[k])) {
+      temp[k] = copyArray(temp[k])
+    } else if (temp[k] instanceof Object) {
+      temp[k] = copyObject(temp[k])
     }
   }
   return temp
@@ -124,13 +172,10 @@ function copyObject (object) {
 function copyArray (array) {
   const temp = [...array]
   for (const k in temp) {
-    switch (typeof temp[k]) {
-      case 'object':
-        temp[k] = copyObject(temp[k])
-        break
-      case 'array':
-        temp[k] = copyArray(temp[k])
-        break
+    if (Array.isArray(temp[k])) {
+      temp[k] = copyArray(temp[k])
+    } else if (temp[k] instanceof Object) {
+      temp[k] = copyObject(temp[k])
     }
   }
   return temp
