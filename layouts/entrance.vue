@@ -11,7 +11,7 @@
     height: 100%;
   }
   .ad-ruleForm {
-    position: absolute;
+    position: fixed;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -30,5 +30,12 @@
     line-height: 60px;
     color: #888888;
     font-size: 24px;
+  }
+  .log-reg-link {
+    display: inline-block;
+    float: right;
+  }
+  .log-reg-link>a {
+    color: #67C23A;
   }
 </style>

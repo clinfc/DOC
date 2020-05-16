@@ -1,21 +1,34 @@
 <template>
-  <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" class="ad-ruleForm">
+  <el-form
+    ref="form"
+    :model="form"
+    :rules="rules"
+    label-width="100px"
+    class="ad-ruleForm"
+    autocomplete="off"
+  >
     <h3 class="rule-form-title">
       用户登录
     </h3>
     <el-form-item label="用户名" prop="name">
-      <el-input v-model="ruleForm.name" placeholder="请输入用户名或电子邮箱" />
+      <el-input v-model="form.name" placeholder="请输入用户名或电子邮箱" />
     </el-form-item>
     <el-form-item label="密码" prop="pass">
-      <el-input v-model="ruleForm.pass" type="password" autocomplete="off" placeholder="请输入密码" />
+      <el-input v-model="form.pass" type="password" placeholder="请输入密码" />
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')">
+      <el-button @click="reset">
+        重 置
+      </el-button>
+      <el-button type="primary" @click="submit">
         立即登录
       </el-button>
-      <el-button @click="resetForm('ruleForm')">
-        重置
-      </el-button>
+      <div class="log-reg-link">
+        还没有账号？
+        <nuxt-link to="/register">
+          前往注册
+        </nuxt-link>
+      </div>
     </el-form-item>
   </el-form>
 </template>
@@ -25,35 +38,37 @@ export default {
   layout: 'entrance',
   data () {
     return {
-      ruleForm: {
+      form: {
         name: '',
         pass: ''
       },
       rules: {
         name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+          { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
         pass: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 10, message: '长度在 6 到 10 个字符', trigger: 'blur' }
+          { required: true, message: '请输入密码', trigger: 'blur' }
         ]
       }
     }
   },
   methods: {
-    submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
+    // 登录
+    submit () {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
+          const { status, data } = await this.$axios.post('/api/user/login', this.form)
+          if (status === 200 && data.code === 0) {
+            this.$router.push('/')
+          } else {
+            this.$message.error(data.msg || '服务器异常')
+          }
         }
       })
     },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
+    // 重置
+    reset () {
+      this.$refs.form.resetFields()
     }
   }
 }
