@@ -59,9 +59,11 @@ export default {
       })
       return temp
     },
+    // 所有的数据
     data () {
       return this.$cfn.copy(this.$store.state.aside.initial)
     },
+    // 根据下拉框的值，筛选出对应的数据
     sortData () {
       return this.data.filter(row => row.pid === this.value)
     }
@@ -74,6 +76,7 @@ export default {
     }
   },
   methods: {
+    // 根据当前的数据顺序自动设置其 srot 的值
     resort () {
       this.sortData.forEach((row, k) => {
         row.sort = k
