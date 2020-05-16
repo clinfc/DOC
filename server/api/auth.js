@@ -1,13 +1,13 @@
 import Router from 'koa-router'
 import rejson from '../env/rejson'
 
-let router = new Router({ prefix: '/api' })
+let router = new Router({ prefix: '/api/auth' })
 
 // 权限分组 - 列表
-router.get('/auth/list', async ctx => {
+router.get('/list', async ctx => {
   try{
     let { data } = await ctx.$mysql.query({
-      sql: 'select * from `auth`'
+      sql: 'select * from `auth_group`'
     })
     ctx.body = rejson.data(data)
   }catch(e){
@@ -16,7 +16,7 @@ router.get('/auth/list', async ctx => {
 })
 
 // 添加|修改 权限
-router.post('/auth/:type', async ctx => {
+router.post('/:type', async ctx => {
   try{
     let type = ctx.params.type
     if (type !== 'add' && type !== 'edit') {
@@ -27,7 +27,7 @@ router.post('/auth/:type', async ctx => {
     if (type === 'add') {
       // 添加权限
       var { data } = await ctx.$mysql.query({
-        sql: 'insert into `auth` set ?',
+        sql: 'insert into `auth_group` set ?',
         values
       })
     } else if (type === 'edit') {

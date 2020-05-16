@@ -1,13 +1,16 @@
 const Koa = require('koa')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
-require('dotenv').config({ filename: '.server.env'})
 
+import session from 'koa-generic-session'
+import Redis from 'koa-redis'
 import koaBody from 'koa-body'
+
 import mysql from './env/mysql.js'
 import aside from './api/aside.js'
 import tag from './api/tag.js'
 import auth from './api/auth.js'
+import user from './api/user.js'
 import test from './api/test.js'
 
 const app = new Koa()
@@ -16,7 +19,14 @@ const app = new Koa()
 const config = require('../nuxt.config.js')
 config.dev = app.env !== 'production'
 
+app.keys = ['doc', 'mtapi']
+
 app.use(koaBody())
+app.use(session({
+  key: 'doc',
+  profix: 'mt',
+  store: new Redis()
+}))
 app.use(mysql())
 
 async function start () {
@@ -38,6 +48,7 @@ async function start () {
 	app.use(aside.routes()).use(aside.allowedMethods())
   app.use(tag.routes()).use(tag.allowedMethods())
 	app.use(auth.routes()).use(auth.allowedMethods())
+	app.use(user.routes()).use(user.allowedMethods())
 	app.use(test.routes()).use(test.allowedMethods())
 
   app.use((ctx) => {

@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 import rejson from'../env/rejson'
 
-const router = new Router({prefix: '/api'})
+const router = new Router({prefix: '/api/aside'})
 
 let errBody = {
   code: -1,
@@ -10,7 +10,7 @@ let errBody = {
 }
 
 // 菜单列表
-router.get('/aside/all', async ctx => {
+router.get('/all', async ctx => {
   try {
     let { data } = await ctx.$mysql.query({
       sql: 'select * from `aside` order by `sort` asc'
@@ -22,7 +22,7 @@ router.get('/aside/all', async ctx => {
 })
 
 // 添加菜单
-router.post('/aside/add', async ctx => {
+router.post('/add', async ctx => {
   try{
     let keys = ['title', 'to', 'icon', 'pid', 'sort', 'status', 'type']
     let values = {}
@@ -42,7 +42,7 @@ router.post('/aside/add', async ctx => {
 })
 
 // 编辑表单
-router.post('/aside/edit', async ctx => {
+router.post('/edit', async ctx => {
   try{
     let keys = ['id', 'title', 'to', 'icon', 'pid', 'sort', 'status', 'type']
     let values = {}
@@ -62,7 +62,7 @@ router.post('/aside/edit', async ctx => {
 })
 
 // 删除菜单（硬删除）
-router.delete('/aside/del/:id', async ctx => {
+router.delete('/del/:id', async ctx => {
   try{
     let id = parseInt(ctx.params.id)
     if (typeof id !== 'number') {
@@ -80,7 +80,7 @@ router.delete('/aside/del/:id', async ctx => {
 })
 
 // 表单排序
-router.post('/aside/sort', async ctx => {
+router.post('/sort', async ctx => {
   try{
     let sort = ctx.request.body.sort
     if (!sort || !sort.length) {
