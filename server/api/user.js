@@ -115,14 +115,21 @@ router.post('/register', async ctx => {
 
 // 用户登录
 router.post('/login', async ctx => {
-  let { name, pass } = ctx.request.body
-  let { data } = await ctx.$mysql.query({
-    sql: 'select * from `user` where `name` = ? or `email` = ? limit 1',
-    values: [name, name]
-  })
-  if (!data[0] || pass !== data[0].pass) {
-    ctx.body = rejson.error('用户名/邮箱/密码 错误')
-    return
+  try{
+    let { name, pass } = ctx.request.body
+    let { data } = await ctx.$mysql.query({
+      sql: 'select * from `user` where `name` = ? or `email` = ? limit 1',
+      values: [name, name]
+    })
+    if (!data[0] || pass !== data[0].pass) {
+      ctx.body = rejson.error('用户名/邮箱/密码 错误，请确认后进行登录')
+      return
+    }
+    ctx.session.user = {id: data[0].id, name: data[0].name}
+    ctx.body = rejson.success('登录成功！')
+  }catch(e){
+    console.log(e);
+    ctx.body = rejson.error('服务器异常')
   }
 })
 
