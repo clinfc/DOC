@@ -31,7 +31,10 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-    '@/plugins/cfn'
+    // 自定义函数
+    '@/plugins/cfn',
+		// Markdown 编辑器
+		{ src: '@/plugins/mavon-editor', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules

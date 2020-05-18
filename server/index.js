@@ -11,6 +11,7 @@ import aside from './api/aside.js'
 import tag from './api/tag.js'
 import auth from './api/auth.js'
 import user from './api/user.js'
+import article from './api/article.js'
 import test from './api/test.js'
 
 const app = new Koa()
@@ -49,6 +50,7 @@ async function start () {
   app.use(tag.routes()).use(tag.allowedMethods())
 	app.use(auth.routes()).use(auth.allowedMethods())
 	app.use(user.routes()).use(user.allowedMethods())
+	app.use(article.routes()).use(article.allowedMethods())
 	app.use(test.routes()).use(test.allowedMethods())
 
   app.use((ctx) => {
